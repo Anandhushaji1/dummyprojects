@@ -9,11 +9,12 @@ from TODO.models import Todos
 
 
 class TodoSerializer(serializers.ModelSerializer):
+  id=serializers.CharField(read_only=True)
   status=serializers.CharField(read_only=True)
   user=serializers.CharField(read_only=True)
   class Meta:
     model=Todos
-    fields= ["task_name","user","status"]
+    fields= ["id","task_name","user","status"]
   
   def create(self,data):
     usr=self.context.get("user")

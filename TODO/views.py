@@ -10,6 +10,7 @@ from TODO.models import Todos
 from TODO.serializers import TodoSerializer,RegistrationSerializer
 from django.contrib.auth.models import User
 from rest_framework import authentication,permissions
+from TODO.custompermission import IsOwnerOrReadOnly
 
 # Create your views here.
 
@@ -22,10 +23,10 @@ class TodoViews(ViewSet):
     # def create(self,request,*args, **kwargs):
     #     serializer=TodoSerializer(data=request.data)
     #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(data=serializer.data)
+    #      serializer.save()
+    #      return Response(data=serializer.data)
     #     else:
-    #         return Response(data=serializer.error) 
+    #      return Response(data=serializer.error) 
 
     def create(self,request,*args, **kwargs):
         serializer=TodoSerializer(data=request.data,context={"user":request.user})
@@ -61,7 +62,8 @@ class TodoViews(ViewSet):
 
 class TodoModelViewset(ModelViewSet):
     authentication_classes=[authentication.BasicAuthentication]
-    permission_classes=[permissions.IsAuthenticated]
+    permission_classes=[IsOwnerOrReadOnly]
+    #permission_classes=[permissions.IsAuthenticated]
 
 
 

@@ -15,15 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.db import router
-from django.urls import path
-from TODO.views import TodoModelViewset, TodoViews, UserView,ViewSet
+from django.urls import path,include
+from TODO.views import TodoModelViewset, TodoViews, UserView
 from rest_framework.routers import DefaultRouter
+
 
 
 router=DefaultRouter()
 router.register('todos',TodoViews,basename='Todos')
 router.register("api/v1/todos",TodoModelViewset,basename='mtodos')
 router.register("api/v1/users",UserView,basename="users")
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
+    path("web/",include("todoweb.urls")),
 ]+router.urls
